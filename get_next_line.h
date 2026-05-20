@@ -6,11 +6,13 @@
 /*   By: wlu-bjor <wlu-bjor@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 12:43:33 by wlu-bjor          #+#    #+#             */
-/*   Updated: 2026/05/10 12:44:10 by wlu-bjor         ###   ########.fr       */
+/*   Updated: 2026/05/13 12:40:13 by wlu-bjor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
+
+# include <unistd.h>
 
 #endif

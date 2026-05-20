@@ -6,11 +6,13 @@
 /*   By: wlu-bjor <wlu-bjor@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 12:42:39 by wlu-bjor          #+#    #+#             */
-/*   Updated: 2026/05/10 12:43:01 by wlu-bjor         ###   ########.fr       */
+/*   Updated: 2026/05/13 12:40:25 by wlu-bjor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
+
 char	*get_next_line(int fd)
 {
-	return (0);
+	
 }
