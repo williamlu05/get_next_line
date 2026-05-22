@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlu-bjor <wlu-bjor@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*exclude_line(char *buffer)
 {
@@ -95,21 +95,21 @@ static char	*read_bytes(int fd, char *result_buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[MAX_FD];
 	char		*result_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= MAX_FD)
 		return (NULL);
-	buffer = read_bytes(fd, buffer);
-	if (!buffer)
+	buffer[fd] = read_bytes(fd, buffer[fd]);
+	if (!buffer[fd])
 		return (NULL);
-	line = find_line(buffer);
+	result_line = find_line(buffer[fd]);
 	if (!result_line)
 	{
-		free(buffer);
-		buffer = NULL;
+		free(buffer[fd]);
+		buffer[fd] = NULL;
 		return (NULL);
 	}
-	buffer = exclude_line(buffer);
+	buffer[fd] = exclude_line(buffer[fd]);
 	return (result_line);
 }

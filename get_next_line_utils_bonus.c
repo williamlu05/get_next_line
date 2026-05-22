@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wlu-bjor <wlu-bjor@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -55,6 +55,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	ft_strlcpy(result + size_first, s2, size_second + 1);
 	return (result);
 }
+// comprobar que funcione ultimo ft_strlcpy
 
 size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
