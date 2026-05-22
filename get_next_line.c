@@ -103,7 +103,7 @@ char	*get_next_line(int fd)
 	buffer = read_bytes(fd, buffer);
 	if (!buffer)
 		return (NULL);
-	line = find_line(buffer);
+	result_line = find_line(buffer);
 	if (!result_line)
 	{
 		free(buffer);
