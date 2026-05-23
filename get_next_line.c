@@ -6,7 +6,7 @@
 /*   By: wlu-bjor <wlu-bjor@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 12:42:39 by wlu-bjor          #+#    #+#             */
-/*   Updated: 2026/05/20 11:48:29 by wlu-bjor         ###   ########.fr       */
+/*   Updated: 2026/05/23 15:55:18 by wlu-bjor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*read_bytes(int fd, char *result_buffer)
 		result_buffer = ft_calloc(1, 1);
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buffer)
-		return (free(result_buffer, NULL));
+		return (free(result_buffer), NULL);
 	bytes_read = 1;
 	while (bytes_read > 0)
 	{
