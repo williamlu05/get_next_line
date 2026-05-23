@@ -6,11 +6,11 @@
 /*   By: wlu-bjor <wlu-bjor@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 12:43:18 by wlu-bjor          #+#    #+#             */
-/*   Updated: 2026/05/20 11:47:20 by wlu-bjor         ###   ########.fr       */
+/*   Updated: 2026/05/23 18:16:22 by wlu-bjor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 // Returns length of string 's'
 size_t	ft_strlen(const char *s)
