@@ -4,38 +4,83 @@
 
 ## Descripción
 
-Este proyecto establece la función get_next_line(fd), el cual es capaz de leer una línea completa del descriptor de archivo indicado por el parámetro. Permite leer tanto de ficheros como de la entrada de lectura del programa, y en caso de leer ficheros, leerá hasta el fin del archivo cuando carece de saltos de línea. 
+`get_next_line` implementa una función que devuelve una línea completa cada vez que se llama con un descriptor de archivo (`fd`).
 
-El programa lee en bloques de bytes, y en caso de leer demás (pasado el fin de línea), mantendrán los bytes restantes hasta la siguiente llamada de get_next_line, para que no se pierda esos datos de lectura anteriores
+Objetivo del proyecto:
+- Leer de forma incremental desde un `fd` sin cargar todo el archivo en memoria.
+- Devolver cada línea incluyendo `\n` cuando exista.
+- Mantener el estado entre llamadas para continuar desde el punto exacto de lectura anterior.
+
+La función funciona tanto con archivos regulares como con la entrada estándar.
 
 ## Instrucciones
 
-Con este proyecto se proporciona la función, y en cuanto se compile tendrá abierta la variable estática que almacenará el buffer de entrada, por lo que se puede seguir llamando la función de forma continua, y el programa gestionará la lectura hasta no quedar datos que leer. 
+### Compilación
 
-Aquí tiene un programa que es capaz de probar cada ejecución de la función:
-
+```bash
+cc -Wall -Wextra -Werror -D BUFFER_SIZE=100 get_next_line.c get_next_line_utils.c
 ```
-#include <sys/stat.h>
+
+También se puede compilar sin definir `BUFFER_SIZE`; en ese caso se usa el valor por defecto definido en el header.
+
+### Uso básico
+
+```c
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include "get_next_line.h"
-// #include "get_next_line_bonus.h"
+
 int main(void)
 {
-	// Probar leer ficheros o de entrada, descomenta el que desees
-	// int fd = open("test.txt", O_RDONLY);
-	int fd = 1;
+	int		fd;
+	char	*line;
 
-	while (1)
+	fd = open("test.txt", O_RDONLY);
+	if (fd < 0)
+		return (1);
+	line = get_next_line(fd);
+	while (line)
 	{
-		char *string = get_next_line(fd);
-		if (*string)
-			printf("%s", string);
+		printf("%s", line);
+		free(line);
+		line = get_next_line(fd);
 	}
+	close(fd);
 	return (0);
 }
 ```
 
+Para leer de entrada estándar, usa `get_next_line(0)`. En caso de que quieras comprobar la parte bonus, se sustituye el header a la versión bonus.
+
+## Algoritmo y Justificación Técnica
+
+La implementación se apoya en una variable estática para conservar los bytes pendientes entre llamadas. El flujo es:
+
+1. Leer bloques de tamaño `BUFFER_SIZE` y concatenarlos a un buffer persistente.
+2. Detener la lectura en cuanto aparezca `\n` o `read()` devuelva fin de archivo.
+3. Extraer y devolver la primera línea disponible del buffer persistente.
+4. Guardar el resto para la siguiente llamada.
+
+Justificación de esta estrategia:
+- Cumple el requisito de lectura incremental: no procesa el archivo completo por adelantado.
+- Minimiza lecturas innecesarias: al detectar `\n`, corta la lectura en esa llamada.
+- Es robusta para líneas largas y tamaños de buffer muy distintos (`1`, `42`, `9999`, etc.).
+- Respeta el comportamiento esperado en EOF:
+  - Si queda texto sin `\n`, devuelve esa última línea.
+  - Si no queda nada más que leer, devuelve `NULL`.
+
+En bonus, se amplía la idea usando almacenamiento estático por descriptor para soportar múltiples `fd` en alternancia sin mezclar estados.
+
 ## Recursos
 
-Se ha utilizado el manual de C en momentos necesarios, compañeros en caso de duda, la inteligencia artificial en búsquedas de errores, edge cases que probar, y redacción del proyecto. No se ha utilizado ningún algoritmo innovador para implementar la función, lo que sí que ha sido necesario manejar ha sido la lectura de fichero y las variables estáticas.
+Referencias técnicas clásicas:
+- Manual de `read(2)`: https://man7.org/linux/man-pages/man2/read.2.html
+- Manual de `open(2)`: https://man7.org/linux/man-pages/man2/open.2.html
+- Manual de `malloc(3)`: https://man7.org/linux/man-pages/man3/malloc.3.html
+- Documentación POSIX (descriptor de archivo y E/S): https://pubs.opengroup.org/onlinepubs/9699919799/
+
+Uso de IA en este proyecto:
+- Se utilizó para revisar redacción y detectar casos límite a probar.
+- No se usó para sustituir el proceso de diseño principal del algoritmo ni la comprensión de la lógica de lectura incremental.
+- El código final se revisó manualmente para asegurar coherencia con las restricciones del enunciado.
