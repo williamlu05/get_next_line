@@ -28,7 +28,7 @@ char	*exclude_line(char *buffer)
 	exclusion_buffer = malloc((ft_strlen(buffer) - len_line + 1)
 			* sizeof(char));
 	if (!exclusion_buffer)
-		return (NULL);
+		return (free(buffer), NULL);
 	i = 0;
 	while (buffer[len_line + i])
 	{
@@ -77,7 +77,7 @@ static char	*read_bytes(int fd, char *result_buffer)
 		result_buffer = ft_calloc(1, 1);
 	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	if (!buffer)
-		return (NULL);
+		return (free(result_buffer, NULL));
 	bytes_read = 1;
 	while (bytes_read > 0)
 	{
