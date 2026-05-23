@@ -28,7 +28,6 @@ También se puede compilar sin definir `BUFFER_SIZE`; en ese caso se usa el valo
 ```c
 #include <fcntl.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include "get_next_line.h"
 
 int main(void)
